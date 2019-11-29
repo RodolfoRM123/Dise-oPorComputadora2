@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Dados</title>
+	<script type="text/javascript" src="../three.js"></script>
+	<script type="text/javascript" src="../jquery-1.9.0.js"></script>
+	<script type="text/javascript" src="../dat.gui.js"></script>
+
+</head>
+<body>
+	<audio src="sad.mp3" autoplay> </audio>
+		<style>
+ body{
+ /* Poner el margen del documento html a 0 y ocultar el desbordamiento para mostrar la escena a ventana completa */
+ margin: 0;
+ overflow: hidden;
+ }
+ #SalidaWebGL{
+ 
+ background-repeat : no-repeat;
+ position: fixed;
+ background-size : 100% 100%;
+ }
+
+</style>
+
+	<!-- div en el que mostraremos la salida -->
+	<div id="SalidaWebGL">
+	</div>
+	<!-- funcion Javascript que ejecutará nuestro ejemplo sobre Three.js -->
+	<script type="text/javascript">
+		// Cuando se cargue la página se ejecutará nuestra función
+		$(function () {
+
+			//Crear una escena, que contendrá todos los elementos como objetos, cámaras y luces.
+			var escena = new THREE.Scene();
+
+			//Crear una cámara, que define hacia dónde estamos mirando.
+			var camara = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.5, 1000);
+
+			//Crear un objeto render y establecer su tamaño
+				var renderizador = new THREE.WebGLRenderer({alpha:true});
+			//renderizador.setClearColor(new THREE.Color(0xEEEEEE));
+			
+			renderizador.setSize(window.innerWidth, window.innerHeight);
+			renderizador.shadowMapEnabled= true;
+	
+			var ejes = new THREE.AxisHelper( 20 );
+			//escena.add(ejes);
+
+
+		
+			//Crear un cubo
+			var materiales=[new THREE.MeshLambertMaterial({ map : THREE.ImageUtils.loadTexture( 'https://www.google.com/url?sa=i&source=images&cd=&ved=2ahUKEwiTrMXIhY7mAhUDPq0KHQTQBmcQjRx6BAgBEAQ&url=https%3A%2F%2Fdado.online%2F&psig=AOvVaw0LbgSNW_MsT4a5ByQnENWA&ust=1575069569719606' )}),//derecha
+							new THREE.MeshLambertMaterial({ map : THREE.ImageUtils.loadTexture( 'dos.PNG' )}),//izquierda
+							new THREE.MeshLambertMaterial({ map : THREE.ImageUtils.loadTexture( 'uno.PNG' )}),//arriba
+							new THREE.MeshLambertMaterial({ map : THREE.ImageUtils.loadTexture( 'seis.PNG' )}),//abajo
+							new THREE.MeshLambertMaterial({ map : THREE.ImageUtils.loadTexture( 'tres.PNG' )}),//frente
+							new THREE.MeshLambertMaterial({ map : THREE.ImageUtils.loadTexture( 'cuatro.PNG' )})//atras
+							];			
+
+				var geometriaDelCubo = new THREE.CubeGeometry(12,12,12);
+				var materialdelcubo = new THREE.MeshFaceMaterial(materiales);
+				
+				var cubo1 = new THREE.Mesh( geometriaDelCubo, materialdelcubo);
+				
+			
+				
+
+				//Posicionar el cubo
+				cubo1.position.x=3;
+				cubo1.position.y=0;
+				cubo1.position.z=3;
+
+			
+
+				
+
+				//Agregar el cubo a la escena
+
+				escena.add(cubo1);
+				
+								
+				cubo1.castShadow = true;
+				
+
+			/*	cubo3.rotation.y =90;
+				cubo4.rotation.y=90;
+				cubo5.rotation.y =180;*/
+			
+				
+
+				//Crear el plano que simula el suelo
+
+				var geometriaDelPlano = new THREE.PlaneGeometry(60,60);
+				var materialDelPlano = new THREE.MeshLambertMaterial({color: 0xcccccc});
+
+				var plano = new THREE.Mesh(geometriaDelPlano,materialDelPlano);	 
+
+			//Rotar y posicionar el plano
+
+				plano.rotation.x=-0.5*Math.PI;
+
+				plano.position.x=0		
+
+				plano.position.y=-3
+
+				plano.position.z=0
+
+			//Agregar el plano a la escena
+
+					//escena.add(plano);
+
+				var luz = new THREE.SpotLight( 0xffffff );
+				var luz1 = new THREE.SpotLight( 0xffffff );
+				var luz2 = new THREE.SpotLight( 0xffffff );
+				var luz3 = new THREE.SpotLight(0xffffff);
+				luz.position.set( -40, 40, 60 );
+				luz1.position.set(40,40,60);
+				luz2.position.set(40,-40,60);
+				luz3.position.set(-40,40,-60);
+
+				escena.add( luz );
+				escena.add(luz1);
+				escena.add(luz2);
+				escena.add(luz3);
+				plano.receiveShadow = true;
+				luz.castShadow = true;
+
+				//Inicializamos la variable paso para controlar el rebote de la esfera
+
+ 				var paso=0;   
+ 				var ang=1;
+ 		//inicia codigo para la animacion de cubo y esfera
+
+			// llamada a función de animación
+
+			animar();
+			function animar() {
+
+			// rotar el cubo
+
+			cubo1.rotation.x += 0.002;
+
+			cubo1.rotation.y += 0.002;
+			cubo1.rotation.z += 0.002;
+				// rebotar la esfera
+
+				
+					ang +=0.01;
+					var x=80 *Math.cos(ang);
+					var z= 80 *Math.sin(ang);
+
+					camara.position.x =x;
+					camara.position.z = z;
+					camara.lookAt(escena.position);
+					// renderizar con requestAnimationFrame
+
+				requestAnimationFrame(animar);
+
+				renderizador.render(escena, camara);
+				
+				
+
+				}//termina el codogo de la animacion
+
+			//Posicionamos la cámara y hacemos que apunte al centro de la escena.
+			camara.position.x = 0;
+			camara.position.y = 30;
+			camara.position.z = 30;
+			camara.lookAt(escena.position);
+
+			//Asociamos el resultado del renderizado con el elemento html adecuado (un div o un canvas)
+			$("#SalidaWebGL").append(renderizador.domElement);
+
+			//Renderizamos la escena
+			renderizador.render(escena, camara);
+
+
+			
+
+    });
+	
+	</script>
+</body>
+</html>

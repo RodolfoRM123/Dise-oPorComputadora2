@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>sistema solar</title>
+		<script type="text/javascript" src="../three.js"></script>
+	<script type="text/javascript" src="../jquery-1.9.0.js"></script>
+	<script type="text/javascript" src="../dat.gui.js"></script>
+</head>
+<body>
+<!--<audio src="miArchivo.mp3" autoplay> </audio>-->
+	<style>
+ body{
+ /* Poner el margen del documento html a 0 y ocultar el desbordamiento para mostrar la escena a ventana completa */
+ margin: 0;
+ overflow: hidden;
+ }
+ #SalidaWebGL{
+ 
+ background-repeat : no-repeat;
+ position: fixed;
+ background-size : 100% 100%;
+ }
+
+</style>
+
+	<!-- div en el que mostraremos la salida -->
+	<div id="SalidaWebGL">
+	</div>
+	<!-- funcion Javascript que ejecutará nuestro ejemplo sobre Three.js -->
+	<script type="text/javascript">
+		// Cuando se cargue la página se ejecutará nuestra función
+		$(function () {
+
+			//Crear una escena, que contendrá todos los elementos como objetos, cámaras y luces.
+			var escena = new THREE.Scene();
+
+			//Crear una cámara, que define hacia dónde estamos mirando.
+			var camara = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+			//Crear un objeto render y establecer su tamaño
+			var renderizador = new THREE.WebGLRenderer({alpha: true});// se agrega el alpha para mostrar la imagen
+
+			//quitamos esta linea para poder poner un fondo de imagen			//renderizador.setClearColor(new THREE.Color(0xEEEEEE));
+			renderizador.setSize(window.innerWidth, window.innerHeight);
+			renderizador.shadowMapEnabled= false;//true o false para quitar las sombras
+	
+			var ejes = new THREE.AxisHelper( 20 );
+			//escena.add(ejes);
+
+			//Crear un cubo
+
+				
+			// se cambia la textura del cubo por una imagen descargada
+				//si no esta en un servidor se vera negro, entonces lo subimos a un servidor para ver el cambio
+				
+				var geometriaDeLaEsfera= new THREE.SphereGeometry(8,30,30);
+				var materialDeLaEsfera = new THREE.MeshLambertMaterial({ color: 0xF23F3F});				
+				var esfera1 = new THREE.Mesh(geometriaDeLaEsfera, materialDeLaEsfera);
+
+				var geometriaDeLaEsfera2= new THREE.SphereGeometry(1,20,20);
+				var materialDeLaEsfera2 = new THREE.MeshLambertMaterial({color: 0xF23F3F});				
+				var esfera2 = new THREE.Mesh(geometriaDeLaEsfera2, materialDeLaEsfera2);
+
+				var geometriaDeLaEsfera3= new THREE.SphereGeometry(3,20,20);
+				var materialDeLaEsfera3 = new THREE.MeshLambertMaterial({color: 0xF23F3F});				
+				var esfera3 = new THREE.Mesh(geometriaDeLaEsfera3, materialDeLaEsfera3);
+
+				var geometriaDeLaEsfera4= new THREE.SphereGeometry(2,20,20);
+				var materialDeLaEsfera4 = new THREE.MeshLambertMaterial({color: 0xF23F3F});				
+				var esfera4 = new THREE.Mesh(geometriaDeLaEsfera4, materialDeLaEsfera4);
+
+				var geometriaDeLaEsfera5= new THREE.SphereGeometry(1.5,20,20);
+				var materialDeLaEsfera5 = new THREE.MeshLambertMaterial({color: 0xF23F3F});				
+				var esfera5 = new THREE.Mesh(geometriaDeLaEsfera5, materialDeLaEsfera5);
+
+				var geometriaDeLaEsfera6= new THREE.SphereGeometry(6,20,20);
+				var materialDeLaEsfera6 = new THREE.MeshLambertMaterial({ color: 0xF23F3F});				
+				var esfera6 = new THREE.Mesh(geometriaDeLaEsfera6, materialDeLaEsfera6);
+
+				var geometriaDeLaEsfera7= new THREE.SphereGeometry(3.5,20,20);
+				var materialDeLaEsfera7 = new THREE.MeshLambertMaterial({color: 0xF23F3F});				
+				var esfera7 = new THREE.Mesh(geometriaDeLaEsfera7, materialDeLaEsfera7);
+
+				var geometriaDeLaEsfera8= new THREE.SphereGeometry(3,20,20);
+				var materialDeLaEsfera8 = new THREE.MeshLambertMaterial({ color: 0xF23F3F});				
+				var esfera8 = new THREE.Mesh(geometriaDeLaEsfera8, materialDeLaEsfera8);
+
+				var geometriaDeLaEsfera9= new THREE.SphereGeometry(2.5,20,20);
+				var materialDeLaEsfera9 = new THREE.MeshLambertMaterial({color: 0xF23F3F});				
+				var esfera9 = new THREE.Mesh(geometriaDeLaEsfera9, materialDeLaEsfera9);
+
+				var geometriaDeLaEsfera10= new THREE.SphereGeometry(.8,20,20);
+				var materialDeLaEsfera10 = new THREE.MeshLambertMaterial({color: 0xF23F3F});				
+				var esfera10 = new THREE.Mesh(geometriaDeLaEsfera10, materialDeLaEsfera10);
+				
+			
+				
+
+				//Posicionar el cubo
+				
+
+				esfera1.position.x=0; //eje verde
+				esfera1.position.y=0; //eje azul
+				esfera1.position.z=0; //eje rojo
+
+				esfera2.position.x=0; //eje verde
+				esfera2.position.y=2; //eje azul
+				esfera2.position.z=-15; //eje rojo
+
+				esfera3.position.x=15; //eje verde
+				esfera3.position.y=2; //eje azul
+				esfera3.position.z=-10; //eje rojo
+
+				esfera4.position.x=-6; //eje verde
+				esfera4.position.y=2; //eje azul
+				esfera4.position.z=8; //eje rojo
+
+
+				esfera5.position.x=-20; //eje verde
+				esfera5.position.y=2; //eje azul
+				esfera5.position.z=10; //eje rojo
+
+
+				esfera6.position.x=0; //eje verde
+				esfera6.position.y=2; //eje azul
+				esfera6.position.z=18; //eje rojo
+
+
+				esfera7.position.x=35; //eje verde
+				esfera7.position.y=2; //eje azul
+				esfera7.position.z=25; //eje rojo
+
+
+				esfera8.position.x=30; //eje verde
+				esfera8.position.y=2; //eje azul
+				esfera8.position.z=32; //eje rojo
+
+
+				esfera9.position.x=-25; //eje verde
+				esfera9.position.y=2; //eje azul
+				esfera9.position.z=40; //eje rojo
+
+
+				esfera10.position.x=-30; //eje verde
+				esfera10.position.y=2; //eje azul
+				esfera10.position.z=-50; //eje rojo*/
+
+
+				
+
+				//Agregar el cubo a la escena
+
+				
+				escena.add(esfera1);
+				escena.add(esfera2);
+				escena.add(esfera3);
+				escena.add(esfera4);
+				escena.add(esfera5);
+				escena.add(esfera6);
+				escena.add(esfera7);
+				escena.add(esfera8);
+				escena.add(esfera9);
+				escena.add(esfera10);
+
+				
+				
+			/*	esfera1.castShadow= true;
+				esfera2.castShadow= true;
+				esfera3.castShadow= true;
+				esfera4.castShadow= true;
+				esfera5.castShadow= true;
+				esfera6.castShadow= true;
+				esfera7.castShadow= true;
+				esfera8.castShadow= true;
+				esfera9.castShadow= true;
+				esfera10.castShadow= true;*/
+				
+
+				//Crear el plano que simula el suelo
+
+				var geometriaDelPlano = new THREE.PlaneGeometry(50,30);
+				var materialDelPlano = new THREE.MeshLambertMaterial({color: 0xcccccc});
+
+				var plano = new THREE.Mesh(geometriaDelPlano,materialDelPlano);	 
+
+			//Rotar y posicionar el plano
+
+				plano.rotation.x=-0.5*Math.PI;
+
+				plano.position.x=0		
+
+				plano.position.y=-3
+
+				plano.position.z=0
+
+			//Agregar el plano a la escena
+
+					//escena.add(plano);
+
+				var luz = new THREE.SpotLight( 0xffffff );
+
+				luz.position.set( -40, 40, 60 );
+
+				escena.add( luz );
+				plano.receiveShadow = true;
+				luz.castShadow = true;
+
+				//Inicializamos la variable paso para controlar el rebote de la esfera
+
+ 				var paso=0;
+ 				var ang=1;   
+
+ 		//inicia codigo para la animacion de cubo y esfera
+
+			// llamada a función de animación
+
+			animar();
+
+	 
+
+			function animar() {
+
+			// rotar el cubo
+
+			/*cubo1.rotation.x += 0.02;
+
+			cubo1.rotation.y += 0.02;
+
+			cubo1.rotation.z += 0.02;*/
+
+ 				esfera1.rotation.x +=0.02;
+ 				esfera1.rotation.y += 0.00;
+ 				esfera1.rotation.z += 0.01;
+
+ 				esfera2.rotation.x +=0.02;
+ 				esfera2.rotation.y += 0.00;
+ 				esfera2.rotation.z += 0.01;
+
+ 				esfera3.rotation.x +=0.02;
+ 				esfera3.rotation.y += 0.00;
+ 				esfera3.rotation.z += 0.01;
+
+ 				esfera4.rotation.x +=0.02;
+ 				esfera4.rotation.y += 0.00;
+ 				esfera4.rotation.z += 0.01;
+
+ 				esfera5.rotation.x +=0.02;
+ 				esfera5.rotation.y += 0.00;
+ 				esfera5.rotation.z += 0.01;
+
+ 				esfera6.rotation.x +=0.02;
+ 				esfera6.rotation.y += 0.00;
+ 				esfera6.rotation.z += 0.01;
+
+ 				esfera7.rotation.x +=0.02;
+ 				esfera7.rotation.y += 0.00;
+ 				esfera7.rotation.z += 0.01;
+
+ 				esfera8.rotation.x +=0.02;
+ 				esfera8.rotation.y += 0.00;
+ 				esfera8.rotation.z += 0.01;
+
+ 				esfera9.rotation.x +=0.02;
+ 				esfera9.rotation.y += 0.00;
+ 				esfera9.rotation.z += 0.01;
+
+ 				esfera10.rotation.x +=0.02;
+ 				esfera10.rotation.y += 0.00;
+ 				esfera10.rotation.z += 0.01;
+
+
+
+ 				
+					ang +=0.01;
+					var x=80 *Math.cos(ang);
+					var z= 80 *Math.sin(ang);
+
+					camara.position.x =x;
+					camara.position.z = z;
+					camara.lookAt(escena.position);
+					// renderizar con requestAnimationFrame
+
+				requestAnimationFrame(animar);
+
+				renderizador.render(escena, camara);
+				
+
+				// rebotar la esfera
+
+				/*paso+=0.03;
+
+				esfera.position.x = 10+( 10*(Math.cos(paso)));
+
+				esfera.position.y = 5 +( 10*Math.abs(Math.sin(paso)));*/
+
+ 
+
+				// renderizar con requestAnimationFrame
+
+
+				}//termina el codogo de la animacion
+
+
+			//Posicionamos la cámara y hacemos que apunte al centro de la escena.
+			camara.position.x = 20;
+			camara.position.y = 20;
+			camara.position.z = 40;
+			camara.lookAt(escena.position);
+
+			//Asociamos el resultado del renderizado con el elemento html adecuado (un div o un canvas)
+			$("#SalidaWebGL").append(renderizador.domElement);
+
+
+			//Renderizamos la escena
+			renderizador.render(escena, camara);
+
+    });
+	
+	</script>
+</body>
+</html>
